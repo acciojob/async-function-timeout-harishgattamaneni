@@ -1,7 +1,5 @@
-function helper(){
-    let text=document.getElementById("text").value
-    let delay=parseInt(document.getElementById("delay").value)
-	return new Promise((resolve,reject)=>{
+function helper(text,delay){
+	return new Promise((resolve)=>{
 		setTimeout(() => {
             resolve(text)
         }, delay);
@@ -9,7 +7,12 @@ function helper(){
 }
 async function run(event){
     event.preventDefault();
-    let text=await helper()
-    console.log(text)
-    document.getElementById("output").innerText=text
+	let text=document.getElementById("text").value
+    let delay=parseInt(document.getElementById("delay").value)
+	if (isNaN(delay) || delay < 0) {
+        alert("Please enter a valid delay.");
+        return;
+    }
+    let result=await helper(text,delay)
+    document.getElementById("output").innerText=result
 }
